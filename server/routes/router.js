@@ -8,7 +8,8 @@ var config = {
     max: 10, // max number of connections to database
     idleTimeoutMillis: 30000 // Close idle connections to db after
 };
-var pool = new pg.Pool(config);
+var poolModule = require('../modules/pool')
+var pool = poolModule;
 
 // Reads database data for the getTasks function on client.js
 router.get('/', function (req, res) {
