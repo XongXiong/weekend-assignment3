@@ -4,18 +4,29 @@ function main() {
     // Load tasks in database on startup
     getTasks();
     // Click handlers for buttons
-    $('#submitTask').on('click', addTask);
+    $('#submitTask').on('click', checkInput);
     $('.container').on('click', '.compTaskBut', completeTask);
     $('.container').on('click', '.delTaskBut', confirmDelete);
 }
 
-// Adds a task into the DOM when user inputs in data and hits submit
-function addTask() {
+// Checks user input to make sure it isnt blank 
+function checkInput () {
     var newTask = {
         task: $('#taskIn').val(),
         // date: $('#dateIn').val()
         completed: false // default completed status is "false"
     };
+    if (newTask.task == '') {
+        alert('Please input a task before moving on!');
+        $('#taskIn').focus().addClass('noTask');
+    } else {
+        addTask(newTask);
+        $('#taskIn').focus().removeClass('noTask');
+    }
+}
+
+// Adds a task into the DOM when user inputs in data and hits submit
+function addTask(newTask) {
     // Sends tasks to the server
     $.ajax({
         type: 'POST',
