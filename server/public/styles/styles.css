@@ -18,3 +18,13 @@ table {
 .noTask {
     background-color: yellow;
 }
+
+h2 {
+    text-decoration: underline;
+}
+
+.flexbox {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+}
