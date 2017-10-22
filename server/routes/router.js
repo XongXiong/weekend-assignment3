@@ -1,13 +1,6 @@
 var express = require('express');
 var pg = require('pg');
 var router = express.Router();
-var config = {
-    database: 'deneb', // the name of the database
-    host: 'localhost', // database location
-    port: 5432, // port for database
-    max: 10, // max number of connections to database
-    idleTimeoutMillis: 30000 // Close idle connections to db after
-};
 var poolModule = require('../modules/pool')
 var pool = poolModule;
 
