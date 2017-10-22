@@ -14,7 +14,7 @@ function addTask() {
     var newTask = {
         task: $('#taskIn').val(),
         // date: $('#dateIn').val()
-        completed: false
+        completed: false // default completed status is "false"
     };
     // Sends tasks to the server
     $.ajax({
@@ -30,6 +30,7 @@ function addTask() {
         }).done(function (response) {
             // Clears input after user hits submit button
             $('#taskIn').val('');
+            $('#taskIn').focus();
             appendNewTask(response)
         }).fail(function (error) {
             console.log('Error when getting tasks at /tasks', error);
@@ -39,18 +40,19 @@ function addTask() {
     })
 }
 
-// 
+// Append user's new task to "To Do List"
 function appendNewTask(response) {
     var task = response[response.length - 1];
-    $('#pendTaskBody').prepend('<tr id="new_row" class="delCss" style="display: none;"></tr>');
-    $('#new_row').prepend('<td>' + task.task + '</td><td class="completeTask"><button type="button" class="compTaskBut" data-id="' + task.id + '">Complete!</button></td><td class="deleteTask"><button type="button" class="delTaskBut" data-id="' + task.id + '">Delete Task</button></td>').show('slow');
+    var pendTask = '<tr class="delCss newTaskRow" style="display: none;"><td>' + task.task + '</td><td class="completeTask"><button type="button" class="compTaskBut" data-id="' + task.id + '">Complete!</button></td><td class="deleteTask"><button type="button" class="delTaskBut" data-id="' + task.id + '">Delete Task</button></td></tr>';
+    $('#pendTaskBody').append(pendTask);
+    $('.newTaskRow').show('slow');
 }
 
-
+// Runs function to complete a task when user clicks on complete button
 function completeTask() {
-    var taskId = $(this).data("id");
-    var thisRow = $(this).parent().parent();
-    $(this).remove();
+    var taskId = $(this).data("id"); // Gets id of the selected row
+    var thisRow = $(this).parent().parent(); // The row of the button that was clicked
+    $(this).remove(); // Removes complete button so it can be replaced with text
     $.ajax({
         type: 'PUT',
         url: '/tasks/' + taskId
@@ -70,13 +72,16 @@ function completeTask() {
     })
 }
 
+// Appends the completed task to the Completed List
 function appendCompTask(response) {
     console.log(response);
-    var task = response[response.length - 1]
-    $('#compTaskBody').prepend('<tr id="new_row" class="compCss" style="display: none;"></tr>');
-    $('#new_row').prepend('<td>' + task.task + '</td><td>This task is completed!</td><td class="deleteTask"><button type="button" class="delTaskBut" data-id="' + task.id + '">Delete Task</button></td>').show('slow');
+    var task = response[response.length - 1];
+    var compTask = '<tr class="compCss newCompRow" style="display: none;"><td>' + task.task + '</td><td>This task is completed!</td><td class="deleteTask"><button type="button" class="delTaskBut" data-id="' + task.id + '">Delete Task</button></td></tr>';
+    $('#compTaskBody').append(compTask);
+    $('.newCompRow').show('slow');
 }
 
+// Asks the user if they want to delete row
 function confirmDelete() {
     taskId = $(this).data("id");
     thisRow = $(this).parent().parent();
@@ -87,18 +92,19 @@ function confirmDelete() {
     }
 }
 
+// Deletes selected row
 function deleteTask(taskId) {
     $.ajax({
         type: 'DELETE',
         url: '/tasks/' + taskId
     }).done(function (response) {
         console.log('Deleted!');
-        // getTasks();
     }).fail(function (error) {
         console.log('Error when attempting to delete task at /tasks/' + taskId);
     })
 }
 
+// Gets tasks from the database
 function getTasks() {
     $.ajax({
         type: 'GET',
@@ -110,8 +116,10 @@ function getTasks() {
     })
 }
 
+// Appends tasks to the database
 function appendTasks(tasks) {
-    $('#pendTaskBody').empty();
+    // Clear out the table bodies so that they are ready for data to be appended
+    $('#pendTaskBody').empty(); 
     $('#compTaskBody').empty();
     for (var i = 0; i < tasks.length; i += 1) {
         var task = tasks[i];

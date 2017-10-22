@@ -10,6 +10,7 @@ var config = {
 };
 var pool = new pg.Pool(config);
 
+// Reads database data for the getTasks function on client.js
 router.get('/', function(req, res){
     // Attempt to connect to the database
     pool.connect(function (errorConnectingToDb, db, done) {
@@ -35,6 +36,7 @@ router.get('/', function(req, res){
     }); // END POOL
 })
 
+// Reads database data after posting to database from the addTask function on client.js
 router.get('/newTask', function (req, res) {
     // Attempt to connect to the database
     pool.connect(function (errorConnectingToDb, db, done) {
@@ -60,6 +62,7 @@ router.get('/newTask', function (req, res) {
     }); // END POOL
 })
 
+// Reads database data for a specific Id for the completeTask function on client.js
 router.get('/compTask/:id', function (req, res) {
     var compId = req.params.id;
     // Attempt to connect to the database
@@ -86,6 +89,7 @@ router.get('/compTask/:id', function (req, res) {
     }); // END POOL
 })
 
+// creates database data for user input for the addTask function in client.js
 router.post('/', function(req, res){
     var task = req.body;
     // Attempt to connect to the database
@@ -112,6 +116,7 @@ router.post('/', function(req, res){
     }); // END POOL
 })
 
+// deletes database data of selected row for deleteTask function in client.js
 router.delete('/:id', function (req, res) {
     var taskId = req.params.id;
     // Attempt to connect to database
@@ -138,6 +143,7 @@ router.delete('/:id', function (req, res) {
     }); // END POOL
 });
 
+// updates completed status of selected row to true for function for completeTask function in client.js
 router.put('/:id', function (req, res) {
     var taskId = req.params.id;
     // Attempt to connect to database

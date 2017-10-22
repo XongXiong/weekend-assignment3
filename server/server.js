@@ -7,7 +7,6 @@ var router = require('./routes/router.js')
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('server/public'));
-
 app.use('/tasks', router);
 
 app.listen(port, function(){
