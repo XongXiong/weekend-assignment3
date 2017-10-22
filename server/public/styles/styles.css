@@ -19,12 +19,38 @@ table {
     background-color: yellow;
 }
 
+h1 {
+    font-size: 72px;
+}
+
 h2 {
     text-decoration: underline;
 }
 
+h1, h2, h3 {
+    color: white;
+}
+
 .flexbox {
     display: flex;
-    flex-direction: column;
-    align-content: flex-end;
+    justify-content: center;
+}
+
+body {
+    text-align: center;
+    background-color: black;
+    background-image: linear-gradient(to bottom, black, green);
+}
+
+th, td, tr {
+    padding: 5px;
+    text-align: center;
+}
+
+#pendingTasks, #completedTasks {
+    width: 700px;
+}
+
+th {
+    background-color: skyblue;
 }
