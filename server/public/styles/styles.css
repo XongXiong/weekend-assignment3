@@ -38,6 +38,7 @@ h1, h2, h3 {
 
 body {
     text-align: center;
+    font-family: Bookman;
     background-image: linear-gradient(to bottom right, black, green, black);
     height: 100%;
     margin: 0;
@@ -56,4 +57,14 @@ th, td, tr {
 
 th {
     background-color: skyblue;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+td {
+    font-size: 16px;
+}
+input {
+    margin: 3px;
+    width: 300px;
 }

@@ -10,7 +10,7 @@ function main() {
 }
 
 // Checks user input to make sure it isnt blank 
-function checkInput () {
+function checkInput() {
     var newTask = {
         task: $('#taskIn').val(),
         // date: $('#dateIn').val()
@@ -39,10 +39,10 @@ function appendPendTasks(tasks) {
         var task = tasks[i];
         var $ptrow = $('#pendTaskBody').append('');
         if (task.completed == false) {
-        $($ptrow).append('<tr class="delCss"><td>' + task.task + '</td><td class="completeTask"><button type="button" class="compTaskBut btn-primary" data-id="' + task.id + '">Click to complete</button></td><td class="deleteTask"><button type="button" class="delTaskBut btn-danger" data-id="' + task.id + '">Delete Task</button></td></tr>');
+            $($ptrow).append('<tr class="delCss"><td>' + task.task + '</td><td class="completeTask"><button type="button" class="compTaskBut btn-primary" data-id="' + task.id + '">Click to complete</button></td><td class="deleteTask"><button type="button" class="delTaskBut btn-danger" data-id="' + task.id + '">Delete Task</button></td></tr>');
         }
     }
-    }
+}
 
 // Adds a task into the DOM when user inputs in data and hits submit
 function addTask(newTask) {
@@ -107,7 +107,7 @@ function completeTask() {
 function appendCompTask(response) {
     console.log(response);
     var task = response[response.length - 1];
-    var compTask = '<tr class="compCss newCompRow" style="display: none;"><td>' + task.task + '</td><td>This task is completed!</td><td class="deleteTask"><button type="button" class="delTaskBut btn-danger" data-id="' + task.id + '">Delete Task</button></td></tr>';
+    var compTask = '<tr class="compCss newCompRow" style="display: none;"><td>' + task.task + '</td><td>Completed!</td><td class="deleteTask"><button type="button" class="delTaskBut btn-danger" data-id="' + task.id + '">Delete Task</button></td></tr>';
     $('#compTaskBody').append(compTask);
     $('.newCompRow').show('slow');
 }
@@ -151,14 +151,14 @@ function getTasks() {
 // Appends tasks to the database
 function appendTasks(tasks) {
     // Clear out the table bodies so that they are ready for data to be appended
-    $('#pendTaskBody').empty(); 
+    $('#pendTaskBody').empty();
     $('#compTaskBody').empty();
     for (i = 0; i < tasks.length; i += 1) {
         task = tasks[i];
         $ptrow = $('#pendTaskBody').append('');
         var $ctrow = $('#compTaskBody').append('');
         if (task.completed) {
-            $($ctrow).append('<tr class="compCss"><td>' + task.task + '</td><td>This task is completed!</td><td class="deleteTask"><button type="button" class="delTaskBut btn-danger" data-id="' + task.id + '">Delete Task</button></td></tr>');
+            $($ctrow).append('<tr class="compCss"><td>' + task.task + '</td><td>Completed!</td><td class="deleteTask"><button type="button" class="delTaskBut btn-danger" data-id="' + task.id + '">Delete Task</button></td></tr>');
         } else {
             $($ptrow).append('<tr class="delCss"><td>' + task.task + '</td><td class="completeTask"><button type="button" class="compTaskBut btn-primary" data-id="' + task.id + '">Click to complete</button></td><td class="deleteTask"><button type="button" class="delTaskBut btn-danger" data-id="' + task.id + '">Delete Task</button></td></tr>');
         }

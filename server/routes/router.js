@@ -2,16 +2,16 @@ var express = require('express');
 var pg = require('pg');
 var router = express.Router();
 var config = {
-  database: 'deneb', // the name of the database
-  host: 'localhost', // database location
-  port: 5432, // port for database
-  max: 10, // max number of connections to database
-  idleTimeoutMillis: 30000 // Close idle connections to db after
+    database: 'deneb', // the name of the database
+    host: 'localhost', // database location
+    port: 5432, // port for database
+    max: 10, // max number of connections to database
+    idleTimeoutMillis: 30000 // Close idle connections to db after
 };
 var pool = new pg.Pool(config);
 
 // Reads database data for the getTasks function on client.js
-router.get('/', function(req, res){
+router.get('/', function (req, res) {
     // Attempt to connect to the database
     pool.connect(function (errorConnectingToDb, db, done) {
         if (errorConnectingToDb) {
@@ -90,7 +90,7 @@ router.get('/compTask/:id', function (req, res) {
 })
 
 // creates database data for user input for the addTask function in client.js
-router.post('/', function(req, res){
+router.post('/', function (req, res) {
     var task = req.body;
     // Attempt to connect to the database
     pool.connect(function (errorConnectingToDb, db, done) {
