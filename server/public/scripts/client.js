@@ -5,7 +5,6 @@ function main() {
     $('#submitTask').on('click', addTask);
     $('#taskBody').on('click', '.compTaskBut', completeTask);
     $('#taskBody').on('click', '.delTaskBut', confirmDelete);
-    // $('#taskBody').on('click', '.delTaskBut', deleteTask);
 }
 
 function addTask() {
@@ -24,18 +23,20 @@ function addTask() {
             type: 'GET',
             url: '/tasks/newTask'
         }).done(function (response) {
-            console.log(response);
-            console.log(response.length - 1);
-            var task = response[response.length - 1]
-            console.log(task);
-            var $taskAppend = $('#taskBody').prepend('<tr id="new_div" class="delCss" style="display: none;"></tr>');
-            $('#new_div').prepend('<td>' + task.task + '</td><td class="completeTask"><button type="button" class="compTaskBut" data-id="' + task.id + '">Complete!</button></td><td class="deleteTask"><button type="button" class="delTaskBut" data-id="' + task.id + '">Delete Task</button></td>').show('slow');
+            $('#taskIn').val('');
+            addNewTask(response)
         }).fail(function (error) {
             console.log('Error when getting tasks at /tasks', error);
         })
     }).fail(function (error) {
         console.log('Error when posting tasks at /tasks', error);
     })
+}
+
+function addNewTask(response) {
+    var task = response[response.length - 1]
+    var $taskAppend = $('#taskBody').prepend('<tr id="new_div" class="delCss" style="display: none;"></tr>');
+    $('#new_div').prepend('<td>' + task.task + '</td><td class="completeTask"><button type="button" class="compTaskBut" data-id="' + task.id + '">Complete!</button></td><td class="deleteTask"><button type="button" class="delTaskBut" data-id="' + task.id + '">Delete Task</button></td>').show('slow');
 }
 
 function getTasks() {
