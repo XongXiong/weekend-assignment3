@@ -38,8 +38,11 @@ h1, h2, h3 {
 
 body {
     text-align: center;
-    background-color: black;
-    background-image: linear-gradient(to bottom, black, green);
+    background-image: linear-gradient(to bottom right, black, green, black);
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 th, td, tr {
