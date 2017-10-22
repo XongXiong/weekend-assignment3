@@ -20,7 +20,19 @@ function addTask() {
         data: newTask
     }).done(function (response) {
         console.log('success!');
-        // getTasks();
+        $.ajax({
+            type: 'GET',
+            url: '/tasks/newTask'
+        }).done(function (response) {
+            console.log(response);
+            console.log(response.length - 1);
+            var task = response[response.length - 1]
+            console.log(task);
+            var $taskAppend = $('#taskBody').prepend('<tr id="new_div" class="delCss" style="display: none;"></tr>');
+            $('#new_div').prepend('<td>' + task.task + '</td><td class="completeTask"><button type="button" class="compTaskBut" data-id="' + task.id + '">Complete!</button></td><td class="deleteTask"><button type="button" class="delTaskBut" data-id="' + task.id + '">Delete Task</button></td>').show('slow');
+        }).fail(function (error) {
+            console.log('Error when getting tasks at /tasks', error);
+        })
     }).fail(function (error) {
         console.log('Error when posting tasks at /tasks', error);
     })
@@ -63,13 +75,13 @@ function completeTask() {
     })
 }
 
-function confirmDelete(){
+function confirmDelete() {
     taskId = $(this).data("id");
     var thisRow = $(this).parent().parent();
     console.log(thisRow);
-    $(thisRow).fadeOut(2000);
     var result = confirm('Are you sure?');
     if (result) {
+        $(thisRow).fadeOut("slow");
         deleteTask(taskId);
     }
 }

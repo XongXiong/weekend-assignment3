@@ -35,6 +35,31 @@ router.get('/', function(req, res){
     }); // END POOL
 })
 
+router.get('/newTask', function (req, res) {
+    // Attempt to connect to the database
+    pool.connect(function (errorConnectingToDb, db, done) {
+        if (errorConnectingToDb) {
+            // There was an error and no connection was made
+            console.log('Error connecting', errorConnectingToDb);
+            res.sendStatus(500);
+        } else {
+            // We connected to the db!!!!! pool -1
+            //added ordering
+            var queryText = 'SELECT * FROM "tasks" ORDER BY "id" ;';
+            db.query(queryText, function (errorMakingQuery, result) {
+                // We have received an error or result at this point
+                done(); // pool +1
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            }); // END QUERY
+        }
+    }); // END POOL
+})
+
 router.post('/', function(req, res){
     var task = req.body;
     // Attempt to connect to the database
