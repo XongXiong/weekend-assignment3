@@ -18,24 +18,37 @@
         <h2>Add a task to the table!</h2>
         <form>
             <div id="inputTasks">
-        <label for="taskIn">Task:</label>
-        <input id="taskIn" type="text" placeholder="Enter Task">
-        <!-- <label for="dateIn">Due Date:</label>
+                <label for="taskIn">Task:</label>
+                <input id="taskIn" type="text" placeholder="Enter Task">
+                <!-- <label for="dateIn">Due Date:</label>
         <input id="dateIn" type="date"> -->
-        <button type="button" id="submitTask">Submit</button>
-        </div>
+                <button type="button" id="submitTask">Submit</button>
+            </div>
         </form>
     </div>
-    <table id="table">
+    <div class="container">
+    <table id="pendingTasks">
+        <h2>To Do List!</h2>
         <thead>
             <th>Task</th>
             <!-- <th>Due Date</th> -->
             <th>Complete?</th>
             <th>Delete?</th>
         </thead>
-        <tbody id="taskBody">
+        <tbody id="pendTaskBody">
         </tbody>
     </table>
+    <table id="completedTasks">
+        <h2>Completed List!</h2>
+        <thead>
+            <th>Task</th>
+            <!-- <th>Due Date</th> -->
+            <th>Complete?</th>
+            <th>Delete?</th>
+        </thead>
+        <tbody id="compTaskBody">
+    </table>
+    </div>
 </body>
 
 </html>

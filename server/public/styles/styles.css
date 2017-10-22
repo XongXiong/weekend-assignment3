@@ -4,9 +4,13 @@ table, th, td, tr {
 }
 
 .delCss {
-    background-color: lightcoral;
+    background-color: lightgoldenrodyellow;
 }
 
 .compCss {
     background-color: lightgreen;
+}
+
+table {
+    margin: 10px;
 }

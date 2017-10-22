@@ -3,9 +3,9 @@ var pg = require('pg');
 var router = express.Router();
 var config = {
   database: 'deneb', // the name of the database
-  host: 'localhost', // where is your database?
-  port: 5432, // the port number for you database, 5432 is the default
-  max: 10, // how many connections at one time
+  host: 'localhost', // database location
+  port: 5432, // port for database
+  max: 10, // max number of connections to database
   idleTimeoutMillis: 30000 // Close idle connections to db after
 };
 var pool = new pg.Pool(config);
@@ -20,7 +20,7 @@ router.get('/', function(req, res){
         } else {
             // We connected to the db!!!!! pool -1
             //added ordering
-            var queryText = 'SELECT * FROM "tasks" ORDER BY "completed","id" ;';
+            var queryText = 'SELECT * FROM "tasks";';
             db.query(queryText, function (errorMakingQuery, result) {
                 // We have received an error or result at this point
                 done(); // pool +1
@@ -47,6 +47,32 @@ router.get('/newTask', function (req, res) {
             //added ordering
             var queryText = 'SELECT * FROM "tasks" ORDER BY "id" ;';
             db.query(queryText, function (errorMakingQuery, result) {
+                // We have received an error or result at this point
+                done(); // pool +1
+                if (errorMakingQuery) {
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.send(result.rows);
+                }
+            }); // END QUERY
+        }
+    }); // END POOL
+})
+
+router.get('/compTask/:id', function (req, res) {
+    var compId = req.params.id;
+    // Attempt to connect to the database
+    pool.connect(function (errorConnectingToDb, db, done) {
+        if (errorConnectingToDb) {
+            // There was an error and no connection was made
+            console.log('Error connecting', errorConnectingToDb);
+            res.sendStatus(500);
+        } else {
+            // We connected to the db!!!!! pool -1
+            //added ordering
+            var queryText = 'SELECT * FROM "tasks" WHERE "id"=$1;';
+            db.query(queryText, [compId], function (errorMakingQuery, result) {
                 // We have received an error or result at this point
                 done(); // pool +1
                 if (errorMakingQuery) {
